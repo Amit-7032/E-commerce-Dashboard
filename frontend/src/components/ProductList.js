@@ -5,6 +5,7 @@ import { MdDeleteForever } from "react-icons/md";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../redux/reducer/productListReducer";
+import lodash from "lodash";
 
 const ProductList = () => {
   // const [products, setProducts] = useState([]);
@@ -46,7 +47,7 @@ const ProductList = () => {
       });
   };
 
-  const searchProduct = async (e) => {
+  const searchProduct = lodash.debounce(async (e) => {
     let key = e.target.value;
     if (key) {
       await axios
@@ -67,7 +68,12 @@ const ProductList = () => {
     } else {
       getProducts();
     }
-  };
+  }, 1000);
+
+  // const searchProduct = (e) => {
+  //   let key = e.target.value;
+  //   debouncedSearchProduct(key);
+  // };
 
   return (
     <>
